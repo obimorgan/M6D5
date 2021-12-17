@@ -1,5 +1,5 @@
 import sequelize from "../index.js";
-import s, { INTEGER } from "sequelize";
+import s, { INTEGER, Sequelize } from "sequelize";
 const { DataTypes } = s;
 
 const ShoppingCart = sequelize.define(
@@ -10,10 +10,12 @@ const ShoppingCart = sequelize.define(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
     },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }
-  //   {
-  //     timestamps: false,
-  //   }
+  
 );
 
 export default ShoppingCart;

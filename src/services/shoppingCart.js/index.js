@@ -1,14 +1,14 @@
 import express from "express";
-import { ShoppingCart, Products, Review, User } from "../../db/models/index.js";
-import { Op, Sequelize } from "sequelize";
+import { ShoppingCart } from "../../db/models/index.js";
+// import { Op, Sequelize } from "sequelize";
 const router = express.Router();
 
 router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const cart = await ShoppingCart.findAll()
-      res.send(cart);
+      const cartItem = await ShoppingCart.findAll()
+      res.send(cartItem);
     } catch (e) {
       console.log(e);
       next(e);
@@ -16,9 +16,18 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      console.log(req.body)
-      const user = await ShoppingCart.create(req.body);
-      res.send(user);
+        const { productId, ...rest } = req.body;
+        console.log(rest)
+        const cartItem = await ShoppingCart.create(rest);
+        if (cartItem) {
+
+          const dataToInsert = productId.map((id) => ({
+            productId: id,
+            UserId: user.id,
+          }));
+          res.send(cartItem);
+        }
+        res.send(rest);
     } catch (e) {
       console.log(e);
       next(e);
