@@ -1,5 +1,5 @@
 import sequelize from "../index.js";
-import s, { INTEGER, Sequelize } from "sequelize";
+import s from "sequelize";
 const { DataTypes } = s;
 
 const ShoppingCart = sequelize.define(
@@ -9,11 +9,7 @@ const ShoppingCart = sequelize.define(
       primaryKey: true,
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+    }
   }
   
 );

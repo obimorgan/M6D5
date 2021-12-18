@@ -18,13 +18,10 @@ Product.belongsTo(User, { onDelete: "CASCADE"})
 Product.belongsToMany(Category, { through: productCategory});
 Category.belongsToMany(Product, { through: productCategory});
 
-Product.hasMany(ShoppingCart, { onDelete: "CASCADE"})
-ShoppingCart.belongsTo(Product, { onDelete: "CASCADE"})
-
 User.hasMany(ShoppingCart, { onDelete: "CASCADE"})
 ShoppingCart.belongsTo(User, { onDelete: "CASCADE"})
 
-
-
+Product.hasMany(ShoppingCart, { onDelete: "CASCADE"})
+ShoppingCart.belongsTo(Product, { onDelete: "CASCADE"})
 
 export { Product, Review, User, Category, ShoppingCart, productCategory};
