@@ -7,7 +7,9 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const data = await Category.findAll();
+      const data = await Category.findAll(req.query !== {} && {
+        where: req.query
+      });
       res.send(data);
     } catch (e) {
       console.log(e);
