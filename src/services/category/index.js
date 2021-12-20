@@ -18,6 +18,8 @@ router
   })
   .post(async (req, res, next) => {
     try {
+      const data = await Category.create(req.body)
+      res.send(data)
     } catch (e) {
       console.log(e);
       next(e);
@@ -51,16 +53,32 @@ router
   })
   .put(async (req, res, next) => {
     try {
-    } catch (e) {
-      console.log(e);
-      next(e);
+      console.log(req.body);
+      const result = await Category.update(req.body, {
+        where: { id: req.params.id },
+        returning: true,
+      });
+      res.status(2001).send(updateTasks[1][0]);
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
   })
   .delete(async (req, res, next) => {
     try {
-    } catch (e) {
-      console.log(e);
-      next(e);
+      const result = await Category.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+      if (result > 0) {
+        res.send("ok");
+      } else {
+        res.status(404).send("not found");
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
   });
 

@@ -59,8 +59,16 @@ router
 
 router.route("/bulk").post(async (req, res, next) => {
   try {
-    const data = await Product.bulkCreate(products);
-
+    const { categoryId, ...rest } = req.body;
+    const product = await Product.bulkCreate(req.body);
+    if(product) {
+      const dataToInsert = categoryId.map((id) => ({
+        categoryId: id,
+        productId: product.id,
+      }));
+      const data = await productCategory.bulkCreate(dataToInsert);
+        res.send({ product, productCategory: data });
+    }
     res.send(data);
   } catch (error) {
     console.log(error);

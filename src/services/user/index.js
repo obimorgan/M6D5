@@ -47,6 +47,10 @@ router
   })
   .put(async (req, res, next) => {
     try {
+      const editUser = await User.update({
+        where: req.params.id
+      })
+      res.status(201).send(editUser[1][0]);
     } catch (e) {
       console.log(e);
       next(e);

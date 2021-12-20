@@ -1,3 +1,5 @@
+/** @format */
+
 import express from "express";
 // import { reviews } from "../../data/articles.js";
 import { Review, Product } from "../../db/models/index.js";
@@ -8,8 +10,7 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const reviews = await Review.findAll(
-        {
+      const reviews = await Review.findAll({
         include: Review,
         where: {
           ...(req.query.search && {
@@ -41,8 +42,7 @@ router
             },
           }),
         },
-      }
-      );
+      });
       res.send(reviews);
     } catch (e) {
       console.log(e);
@@ -81,16 +81,32 @@ router
   })
   .put(async (req, res, next) => {
     try {
-    } catch (e) {
-      console.log(e);
-      next(e);
+      console.log(req.body);
+      const result = await Review.update(req.body, {
+        where: { id: req.params.id },
+        returning: true,
+      });
+      res.status(201).send(updateTasks[1][0]);
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
   })
   .delete(async (req, res, next) => {
     try {
-    } catch (e) {
-      console.log(e);
-      next(e);
+      const result = await Review.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+      if (result > 0) {
+        res.send("ok");
+      } else {
+        res.status(404).send("not found");
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
   });
 
