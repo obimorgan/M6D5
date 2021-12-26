@@ -22,7 +22,7 @@ router
         where: {
           ...(req.query.search && {
             [Op.or]: [
-              {title: { [Op.ilike]: `%${req.query.search}%`},},
+              {product_name: { [Op.ilike]: `%${req.query.search}%`},},
               {content: { [Op.ilike]: `%${req.query.search}%`},},
               {"$user.name$": { [Op.ilike]: "%" + req.query.search + "%"},}
             ]
