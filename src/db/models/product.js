@@ -1,3 +1,5 @@
+/** @format */
+
 import sequelize from "../index.js";
 import s from "sequelize";
 const { DataTypes } = s;
@@ -23,6 +25,10 @@ const Product = sequelize.define("product", {
   image_url: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  amount: {
+    type: DataTypes.FLOAT,
+    defaultValue: 1,
   },
 });
 
